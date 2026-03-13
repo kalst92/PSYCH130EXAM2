@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Psych Study Guide — Test 2: Mood & Anxiety Disorders</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #151820;
+    --surface2: #1d2130;
+    --border: #2a2f42;
+    --text: #e8eaf0;
+    --muted: #8b90a8;
+    --accent-mood: #7c6af7;
+    --accent-anxiety: #f76a7c;
+    --accent-green: #4fcf8a;
+    --accent-gold: #f5c842;
+    --accent-blue: #4ab8f7;
+    --correct: #4fcf8a;
+    --wrong: #f76a7c;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.65;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a1040 50%, #0d0f14 100%);
+    padding: 60px 40px 50px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(124,106,247,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent-mood);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, #fff 30%, var(--accent-mood) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p {
+    color: var(--muted);
+    max-width: 600px;
+    margin: 0 auto 28px;
+    font-size: 15px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .badge {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .badge-mood { background: rgba(124,106,247,0.2); color: var(--accent-mood); border: 1px solid rgba(124,106,247,0.3); }
+  .badge-anxiety { background: rgba(247,106,124,0.15); color: var(--accent-anxiety); border: 1px solid rgba(247,106,124,0.3); }
+  .badge-green { background: rgba(79,207,138,0.15); color: var(--accent-green); border: 1px solid rgba(79,207,138,0.3); }
+  .badge-gold { background: rgba(245,200,66,0.15); color: var(--accent-gold); border: 1px solid rgba(245,200,66,0.3); }
+
+  /* ===== NAV TABS ===== */
+  .nav-wrap {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 16px 24px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent-mood); border-bottom-color: var(--accent-mood); }
+
+  /* ===== MAIN CONTENT ===== */
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px 80px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ===== SECTION HEADER ===== */
+  .section-header {
+    margin-bottom: 32px;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .section-header p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  /* ===== ACCORDION / DISORDER CARDS ===== */
+  .disorder-grid { display: grid; gap: 16px; }
+  .disorder-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .disorder-card:hover { border-color: var(--accent-mood); }
+  .disorder-header {
+    padding: 20px 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .disorder-title-group { display: flex; align-items: center; gap: 14px; }
+  .disorder-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .icon-mood { background: rgba(124,106,247,0.15); }
+  .icon-anxiety { background: rgba(247,106,124,0.15); }
+  .disorder-name { font-weight: 600; font-size: 16px; }
+  .disorder-abbr { font-size: 12px; color: var(--muted); }
+  .chevron { color: var(--muted); transition: transform 0.3s; font-size: 18px; }
+  .disorder-card.open .chevron { transform: rotate(180deg); }
+  .disorder-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 0;
+  }
+  .disorder-card.open .disorder-body { display: block; padding-top: 20px; }
+
+  /* Info grid inside disorder body */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .info-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .info-block-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+  .info-block ul { list-style: none; }
+  .info-block ul li {
+    font-size: 13.5px;
+    padding: 4px 0;
+    padding-left: 14px;
+    position: relative;
+    color: #cdd0de;
+  }
+  .info-block ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent-mood);
+    font-weight: bold;
+  }
+  .info-block p { font-size: 13.5px; color: #cdd0de; }
+  .tag {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag-bio { background: rgba(74,184,247,0.15); color: var(--accent-blue); }
+  .tag-psych { background: rgba(124,106,247,0.15); color: var(--accent-mood); }
+  .tag-social { background: rgba(79,207,138,0.15); color: var(--accent-green); }
+  .tag-cond { background: rgba(245,200,66,0.15); color: var(--accent-gold); }
+  .tag-treat { background: rgba(247,106,124,0.15); color: var(--accent-anxiety); }
+
+  /* ===== COMPARE TABLE ===== */
+  .compare-wrap { overflow-x: auto; }
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .compare-table th {
+    background: var(--surface2);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+  .compare-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    font-size: 13px;
+    color: #cdd0de;
+  }
+  .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .compare-table td:first-child { font-weight: 600; color: var(--text); white-space: nowrap; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .dot-mood { background: var(--accent-mood); }
+  .dot-anxiety { background: var(--accent-anxiety); }
+
+  /* ===== MULTIPLE CHOICE ===== */
+  .quiz-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .quiz-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .quiz-score span { color: var(--accent-green); font-weight: 600; }
+  .btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--accent-mood);
+    color: #fff;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+  .question-card.answered { border-color: var(--border); }
+  .q-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .q-text {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .q-vignette {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent-gold);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: 13.5px;
+    color: #cdd0de;
+    font-style: italic;
+  }
+  .options { display: grid; gap: 8px; }
+  .option {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.18s;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .option:hover:not(.locked) { border-color: var(--accent-mood); background: rgba(124,106,247,0.08); }
+  .option.selected { border-color: var(--accent-mood); background: rgba(124,106,247,0.1); }
+  .option.correct { border-color: var(--correct); background: rgba(79,207,138,0.1); }
+  .option.wrong { border-color: var(--wrong); background: rgba(247,106,124,0.1); }
+  .option.locked { cursor: default; }
+  .opt-letter {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--border);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+  }
+  .option.correct .opt-letter { background: var(--correct); color: #000; }
+  .option.wrong .opt-letter { background: var(--wrong); color: #fff; }
+  .option.selected:not(.correct):not(.wrong) .opt-letter { background: var(--accent-mood); color: #fff; }
+
+  .q-explanation {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(79,207,138,0.07);
+    border: 1px solid rgba(79,207,138,0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: #b5f5d0;
+    line-height: 1.5;
+  }
+  .q-explanation.show { display: block; }
+
+  /* ===== VIGNETTE SECTION ===== */
+  .vignette-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .vignette-header {
+    background: var(--surface2);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .vignette-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .vignette-title { font-size: 16px; font-weight: 600; margin-top: 2px; }
+  .vignette-body { padding: 24px; }
+  .vignette-text {
+    font-style: italic;
+    font-size: 14px;
+    color: #cdd0de;
+    line-height: 1.75;
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--surface2);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-gold);
+  }
+  .vignette-questions { display: grid; gap: 14px; }
+  .vignette-q {
+    padding: 14px;
+    background: var(--surface2);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .vignette-q-label {
+    font-size: 11px;
+    color: var(--accent-anxiety);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-family: 'DM Mono', monospace;
+  }
+  .vignette-q-text { font-size: 14px; font-weight: 500; margin-bottom: 10px; }
+  .reveal-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px dashed var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+  .reveal-btn:hover { color: var(--text); border-color: var(--muted); }
+  .vignette-answer {
+    display: none;
+    margin-top: 10px;
+    padding: 12px;
+    background: rgba(124,106,247,0.08);
+    border: 1px solid rgba(124,106,247,0.2);
+    border-radius: 6px;
+    font-size: 13px;
+    color: #c9c2ff;
+    line-height: 1.6;
+  }
+  .vignette-answer.show { display: block; }
+
+  /* ===== FLASHCARDS ===== */
+  .fc-filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .fc-filter {
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .fc-filter:hover { border-color: var(--muted); color: var(--text); }
+  .fc-filter.active { background: var(--accent-mood); color: #fff; border-color: var(--accent-mood); }
+  .fc-stats {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .fc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .fc-card {
+    height: 180px;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+  .fc-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .fc-card.flipped .fc-inner { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .fc-front {
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+  .fc-back {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    transform: rotateY(180deg);
+  }
+  .fc-chapter-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .fc-term { font-size: 17px; font-weight: 700; color: var(--text); }
+  .fc-def { font-size: 13px; color: #cdd0de; line-height: 1.55; }
+  .fc-flip-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: auto;
+    padding-top: 10px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ===== RISK FACTOR COMPARE ===== */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 700px) { .risk-grid { grid-template-columns: 1fr; } }
+  .risk-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+  .risk-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .risk-section { margin-bottom: 14px; }
+  .risk-section-title {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .risk-item {
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: #cdd0de;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .risk-item::before {
+    content: '▸';
+    color: var(--accent-mood);
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .shared-label {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 4px;
+    background: rgba(79,207,138,0.15);
+    color: var(--accent-green);
+    font-weight: 700;
+    white-space: nowrap;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .progress-label { font-size: 13px; font-weight: 500; min-width: 140px; }
+  .progress-bar { flex: 1; height: 6px; background: var(--border); border-radius: 100px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 100px; transition: width 0.8s ease; }
+  .progress-val { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); min-width: 35px; text-align: right; }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* ===== UTILITY ===== */
+  .text-accent-mood { color: var(--accent-mood); }
+  .text-accent-anxiety { color: var(--accent-anxiety); }
+  .text-green { color: var(--accent-green); }
+  .text-gold { color: var(--accent-gold); }
+  strong { color: var(--text); }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+  .summary-box {
+    background: linear-gradient(135deg, rgba(124,106,247,0.08), rgba(247,106,124,0.05));
+    border: 1px solid rgba(124,106,247,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-top: 20px;
+  }
+  .summary-box h4 { font-size: 13px; color: var(--accent-mood); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; font-family: 'DM Mono', monospace; }
+  .summary-box p { font-size: 13.5px; color: #cdd0de; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Test 2 Study Guide</div>
+  <h1>Mood & Anxiety Disorders</h1>
+  <p>Chapters 4 & 5 — DSM Diagnoses, Epidemiology, Risk Factors, Treatments, and Flashcards</p>
+  <div class="hero-badges">
+    <span class="badge badge-mood">📖 Reference</span>
+    <span class="badge badge-anxiety">❓ Multiple Choice</span>
+    <span class="badge badge-green">📋 Vignettes</span>
+    <span class="badge badge-gold">🃏 Flashcards</span>
+  </div>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('reference')">📖 Disorders</button>
+    <button class="tab-btn" onclick="showTab('compare')">⚖️ Risk Factor Compare</button>
+    <button class="tab-btn" onclick="showTab('quiz')">❓ Multiple Choice</button>
+    <button class="tab-btn" onclick="showTab('vignettes')">📋 Case Vignettes</button>
+    <button class="tab-btn" onclick="showTab('flashcards')">🃏 Flashcards</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  TAB 1: REFERENCE                                            -->
+<!-- ============================================================ -->
+<div class="container">
+<div id="tab-reference" class="section active">
+  <div class="section-header">
+    <h2>Disorder Reference</h2>
+    <p>Click any disorder to expand full DSM criteria, epidemiology, risk factors, and treatments.</p>
+  </div>
+
+  <div class="disorder-grid">
+
+    <!-- MDD -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-mood">🌧️</div>
+          <div>
+            <div class="disorder-name">Major Depressive Disorder</div>
+            <div class="disorder-abbr">MDD · Chapter 4</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>≥5 symptoms for ≥2 weeks</li>
+              <li><strong>Must include</strong>: sad mood OR anhedonia</li>
+              <li>Sleep disturbance (insomnia or hypersomnia)</li>
+              <li>Psychomotor retardation or agitation</li>
+              <li>Weight/appetite change</li>
+              <li>Fatigue / loss of energy</li>
+              <li>Worthlessness or excessive guilt</li>
+              <li>Difficulty concentrating</li>
+              <li>Recurrent thoughts of death or suicide</li>
+              <li>Symptoms cause significant distress/impairment</li>
+              <li>Not better explained by substance or medical condition</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>Lifetime prevalence: ~16.2% in the U.S.</li>
+              <li>Twice as common in women as men</li>
+              <li>Gender gap emerges in early adolescence</li>
+              <li>Higher rates in poverty (3× more common)</li>
+              <li>~15.8% of adolescents; 20% of college students affected</li>
+              <li>Age of onset has trended earlier over 60 years</li>
+              <li>45% also meet criteria for anxiety disorder lifetime</li>
+              <li>Episodic — 40–50% recur within 10 years</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors — Biological</div>
+            <ul>
+              <li>Heritability ~0.37 (moderate)</li>
+              <li>Elevated amygdala activity → threat hypersensitivity</li>
+              <li>Diminished striatal activity → blunted reward sensitivity</li>
+              <li>Diminished prefrontal cortex activity → poor emotion regulation</li>
+              <li>Pro-inflammatory cytokines (IL-6, TNF-alpha) elevated</li>
+              <li>Circadian rhythm & sleep disruptions (insomnia)</li>
+              <li>Serotonin, norepinephrine, dopamine dysregulation</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors — Psychological</div>
+            <ul>
+              <li><strong>Neuroticism</strong>: trait of frequent/intense negative affect</li>
+              <li><strong>Beck's Cognitive Triad</strong>: negative schemas about self, world, future → info-processing biases</li>
+              <li><strong>Hopelessness Theory</strong>: stable + global attributions for negative events → hopelessness → depression</li>
+              <li><strong>Rumination</strong>: dwelling repetitively on sadness; women ruminate more → higher rates</li>
+              <li>Low reward sensitivity (behavioral & biological)</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors — Sociocultural</div>
+            <ul>
+              <li>Childhood adversity (abuse, parental loss)</li>
+              <li>Recent negative life events (job loss, relationship loss)</li>
+              <li>Low social support (40% vs. 4% risk with/without confidant)</li>
+              <li>Income inequality, poverty</li>
+              <li>Cultural stigma, family cohesion</li>
+              <li>Gender minority status → elevated rates</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Empirically Supported Treatments</div>
+            <ul>
+              <li><span class="tag tag-treat">Cognitive Therapy (CT)</span> — challenge negative schemas; as effective as meds; protects against relapse</li>
+              <li><span class="tag tag-treat">Interpersonal Psychotherapy (IPT)</span> — targets interpersonal loss/conflict; as effective as CT</li>
+              <li><span class="tag tag-treat">Behavioral Activation (BA)</span> — increase rewarding activities; as effective as full CT</li>
+              <li><span class="tag tag-treat">MBCT</span> — mindfulness to prevent relapse</li>
+              <li><span class="tag tag-treat">SSRIs / SNRIs</span> — first-line meds; 60% show ≥50% symptom drop</li>
+              <li><span class="tag tag-treat">ECT</span> — most powerful biological treatment; used when meds fail</li>
+              <li><span class="tag tag-treat">rTMS</span> — option when antidepressants insufficient</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PDD -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-mood">🌫️</div>
+          <div>
+            <div class="disorder-name">Persistent Depressive Disorder</div>
+            <div class="disorder-abbr">PDD (Dysthymia) · Chapter 4</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>Depressed mood most of the day, more days than not</li>
+              <li>Duration: ≥2 years (≥1 year in children/adolescents)</li>
+              <li>Symptoms never absent for >2 months at a time</li>
+              <li>≥2 of: sleep disturbance, poor appetite/overeating, low energy, poor self-esteem, concentration difficulty, hopelessness</li>
+              <li>No manic or hypomanic episodes</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>~5% report depressive episodes >2 years</li>
+              <li>Also 2× more common in women</li>
+              <li>Average duration: ~10 years (highly chronic)</li>
+              <li>Outcomes often more severe than MDD due to chronicity</li>
+              <li>Highly comorbid with MDD ("double depression")</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Key Distinction from MDD</div>
+            <p>MDD: ≥5 symptoms for ≥2 weeks (episodic). PDD: ≥2 symptoms for ≥2 years (chronic). PDD requires fewer symptoms but far longer duration. Chronicity is the primary predictor of poor outcome — PDD is not a "milder" disorder.</p>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Treatments</div>
+            <ul>
+              <li>Same as MDD: CT, IPT, BA, antidepressants</li>
+              <li>CBASP (Cognitive Behavioral Analysis System of Psychotherapy) specifically validated for chronic depression</li>
+              <li>Combination of therapy + meds often needed given chronicity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIPOLAR I -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-mood">⚡</div>
+          <div>
+            <div class="disorder-name">Bipolar I Disorder</div>
+            <div class="disorder-abbr">BD-I · Chapter 4</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>≥1 lifetime manic episode (required)</li>
+              <li><strong>Manic episode</strong>: ≥1 week of distinctly elevated/irritable mood + increased energy/activity + ≥3 additional symptoms</li>
+              <li>Additional symptoms: inflated self-esteem, decreased need for sleep, pressured speech, flight of ideas, distractibility, increased goal-directed activity, risky behaviors</li>
+              <li>Significant impairment, hospitalization, or psychosis</li>
+              <li>Depression episode NOT required for diagnosis</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>Prevalence ~1% in U.S. (rarer than MDD)</li>
+              <li>Equal rates in men and women</li>
+              <li>Women experience more depressive episodes within BD</li>
+              <li>Onset: >50% before age 25</li>
+              <li>Highly recurrent: >50% experience ≥4 episodes lifetime</li>
+              <li>60% relapse in first 4 years after first episode</li>
+              <li>~66% comorbid anxiety disorder; many comorbid SUD</li>
+              <li>Among most severe disorders; high suicidality</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors — Biological</div>
+            <ul>
+              <li>Heritability ~0.93 (among most heritable disorders)</li>
+              <li>Genetic overlap with schizophrenia (shared SNPs)</li>
+              <li>Elevated amygdala & anterior cingulate activity</li>
+              <li>Elevated striatum & orbitofrontal cortex (reward) — contrast to MDD</li>
+              <li>Diminished prefrontal cortex activity</li>
+              <li>Pro-inflammatory cytokines elevated</li>
+              <li>Circadian rhythm & sleep disturbances (even during well periods)</li>
+              <li>High reward sensitivity / dopamine dysregulation</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors — Psychological & Social</div>
+            <ul>
+              <li>High reward sensitivity → predicts mania onset</li>
+              <li>Goal-attainment life events trigger manic episodes</li>
+              <li>Sleep deprivation can trigger mania experimentally</li>
+              <li>Negative life events, neuroticism → depressive episodes</li>
+              <li>Low social support → depressive episodes</li>
+              <li>Diagnosis delay (~6 years after first episode)</li>
+              <li>Minorities disproportionately undertreated</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Treatments — Biological</div>
+            <ul>
+              <li><span class="tag tag-treat">Lithium</span> — best-researched mood stabilizer; 80% mild benefit; must monitor blood levels carefully</li>
+              <li><span class="tag tag-treat">Anticonvulsants</span> — e.g., Depakote; FDA-approved for acute mania</li>
+              <li><span class="tag tag-treat">Antipsychotics</span> — e.g., olanzapine; immediate calming; FDA-approved for bipolar depression</li>
+              <li>Combination usually needed; lifelong medication recommended</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Treatments — Psychological</div>
+            <ul>
+              <li><span class="tag tag-treat">Psychoeducation</span> — improves medication adherence, reduces relapse</li>
+              <li><span class="tag tag-treat">CT</span> — modified for BD, identifies early manic signs</li>
+              <li><span class="tag tag-treat">Family-Focused Therapy</span> — educates family, enhances communication</li>
+              <li><span class="tag tag-treat">IPT adapted for BD</span> — stabilizes social rhythms</li>
+              <li>Psychological tx better for depression > mania episodes</li>
+              <li>CBT for insomnia reduces both depression and mania</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BIPOLAR II -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-mood">🌓</div>
+          <div>
+            <div class="disorder-name">Bipolar II Disorder</div>
+            <div class="disorder-abbr">BD-II · Chapter 4</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>≥1 hypomanic episode (required)</li>
+              <li>≥1 major depressive episode (required)</li>
+              <li>No lifetime manic episode (distinguishes from BD-I)</li>
+              <li><strong>Hypomanic episode</strong>: ≥4 days, observable change, no marked impairment, no psychosis</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology & Key Facts</div>
+            <ul>
+              <li>Prevalence: 0.4–2% (varied estimates)</li>
+              <li>Equal rates men/women</li>
+              <li>Often misdiagnosed as unipolar depression</li>
+              <li>Hypomania may feel pleasant — insight often impaired</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">BD-I vs. BD-II Key Difference</div>
+            <p><strong>BD-I:</strong> Mania (severe, causes impairment, ≥1 week). Depression not required.<br><strong>BD-II:</strong> Hypomania (milder, observable but not markedly impairing, ≥4 days). Major depression required. No manic episodes ever.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CYCLOTHYMIA -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-mood">〰️</div>
+          <div>
+            <div class="disorder-name">Cyclothymic Disorder</div>
+            <div class="disorder-abbr">Cyclothymia · Chapter 4</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>≥2 years (1 year in children) of chronic mood fluctuations</li>
+              <li>Numerous periods of hypomanic symptoms (not meeting full criteria)</li>
+              <li>Numerous periods of depressive symptoms (not meeting MDD criteria)</li>
+              <li>Symptoms present ≥50% of the time; never clear >2 months</li>
+              <li>No manic, hypomanic, or MDD episode ever met</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>Estimated ~4% prevalence</li>
+              <li>Causes significant distress/functional impairment</li>
+              <li>Risk factor for developing full BD-I or BD-II</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUICIDE -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-mood">⚠️</div>
+          <div>
+            <div class="disorder-name">Suicide & Suicidality</div>
+            <div class="disorder-abbr">Chapter 4 — Critical Topic</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">Key Terms</div>
+            <ul>
+              <li><strong>Suicidal ideation</strong>: thoughts of killing oneself</li>
+              <li><strong>Suicide attempt</strong>: behavior intended to end life</li>
+              <li><strong>Suicide</strong>: intentional act that ends one's life</li>
+              <li><strong>NSSI</strong>: behaviors causing bodily harm without intent to die</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>~700,000 deaths/year worldwide</li>
+              <li>9% lifetime suicidal ideation; 2.5% attempt</li>
+              <li>Men 4× more likely to die from suicide (U.S.)</li>
+              <li>Women more likely to attempt (non-lethal)</li>
+              <li>Guns: >50% of U.S. suicides</li>
+              <li>Elevated among ethnic/sexual minorities</li>
+              <li>Rates increasing in U.S./Americas; decreasing elsewhere</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors</div>
+            <ul>
+              <li><strong>Bio</strong>: Heritability ~50%; serotonin system disruption</li>
+              <li><strong>Psych Disorder</strong>: MDD, BD, schizophrenia, SUD, PTSD, BPD all elevate risk (~6–8% of hospitalized die by suicide)</li>
+              <li><strong>Social</strong>: divorce/widowhood (4× elevated), perceived burdensomeness, lack of belonging (Joiner's model)</li>
+              <li><strong>Psych</strong>: hopelessness, poor problem-solving</li>
+              <li><strong>Social contagion</strong>: celebrity suicides → 12% increase following month</li>
+              <li><strong>Action vs. Ideation</strong>: blunted fear of bodily harm → more likely to act</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Prevention & Treatment</div>
+            <ul>
+              <li><span class="tag tag-treat">CBT</span> — safety planning; reduces hopelessness; halves re-attempt risk</li>
+              <li><span class="tag tag-treat">DBT</span> — specifically for recurrent self-harm/BPD; reduces suicidal behavior</li>
+              <li><span class="tag tag-treat">Ketamine</span> — same-day relief from suicidal ideation</li>
+              <li><span class="tag tag-treat">Means restriction</span> — coal gas example; bridge barriers; powerful public health tool</li>
+              <li>National hotline: <strong>988</strong> (2022)</li>
+              <li>Talk openly about suicide — does NOT increase risk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPECIFIC PHOBIA -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-anxiety">🕷️</div>
+          <div>
+            <div class="disorder-name">Specific Phobia</div>
+            <div class="disorder-abbr">Chapter 5</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>Disproportionate, consistent fear of specific object/situation</li>
+              <li>Duration typically ≥6 months</li>
+              <li>Object/situation avoided or endured with intense anxiety</li>
+              <li>Types: Animal, Natural Environment, Blood/Injection/Injury, Situational, Other</li>
+              <li>Blood/injection/injury subtype: unique vasovagal fainting response</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>12-month prevalence: ~10.1%; Lifetime: ~13.8%</li>
+              <li>Most common specific anxiety disorder</li>
+              <li>Highly comorbid with other phobias</li>
+              <li>Onset typically childhood/adolescence</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors</div>
+            <ul>
+              <li><span class="tag tag-cond">Conditioning</span>: Two-factor model — direct experience, modeling, verbal instruction</li>
+              <li><span class="tag tag-bio">Bio</span>: Prepared learning — evolutionary readiness to fear certain stimuli (snakes, heights, angry faces)</li>
+              <li><span class="tag tag-psych">Psych</span>: Neuroticism, behavioral inhibition</li>
+              <li><span class="tag tag-bio">Bio</span>: Heritability ~50–60%; amygdala hyperreactivity</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Treatment</div>
+            <ul>
+              <li><span class="tag tag-treat">Exposure therapy (CBT)</span> — most effective; graded hierarchy; can work in just hours</li>
+              <li>Virtual reality exposure effective as in-vivo</li>
+              <li>Minimal medication use; psychological treatment preferred</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIAL ANXIETY DISORDER -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-anxiety">👥</div>
+          <div>
+            <div class="disorder-name">Social Anxiety Disorder</div>
+            <div class="disorder-abbr">Social Phobia · Chapter 5</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>Marked, disproportionate fear of social scrutiny or exposure to unfamiliar people</li>
+              <li>Fear of acting in ways that will be embarrassing/humiliating</li>
+              <li>Social situations avoided or endured with intense anxiety</li>
+              <li>Typically ≥6 months</li>
+              <li>Most common fears: public speaking, meetings, meeting new people, authority figures</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>12-month: ~8%; Lifetime: ~13%</li>
+              <li>Onset typically in adolescence</li>
+              <li>More common in women</li>
+              <li>≥1/3 also meet criteria for avoidant personality disorder</li>
+              <li>Comorbid with MDD (~60%), other anxiety disorders</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors</div>
+            <ul>
+              <li><span class="tag tag-cond">Conditioning</span>: Two-factor model; safety behaviors perpetuate avoidance</li>
+              <li><span class="tag tag-psych">Psych/Cognitive</span>: Overly negative self-evaluation of social performance; excessive focus on internal cues vs. external social cues</li>
+              <li><span class="tag tag-bio">Bio</span>: Behavioral inhibition (strong predictor, 3.79× risk); amygdala hyperreactivity</li>
+              <li><span class="tag tag-psych">Psych</span>: Neuroticism; harsh self-evaluations predict increases over time</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Treatment</div>
+            <ul>
+              <li><span class="tag tag-treat">CBT/Exposure</span> — face feared social situations; reduce safety behaviors; social skill coaching</li>
+              <li><span class="tag tag-treat">Group therapy</span> — natural social exposure setting</li>
+              <li><span class="tag tag-treat">SSRIs/SNRIs</span> — evidence-based medications</li>
+              <li>Challenge overly negative social self-evaluations</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANIC DISORDER -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-anxiety">💥</div>
+          <div>
+            <div class="disorder-name">Panic Disorder</div>
+            <div class="disorder-abbr">Chapter 5</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>Recurrent unexpected panic attacks</li>
+              <li>≥1 month of concern about attacks OR behavior change due to attacks</li>
+              <li><strong>Panic attack</strong>: sudden intense fear with ≥4 symptoms (palpitations, sweating, trembling, shortness of breath, chest pain, dizziness, derealization, depersonalization, fear of dying/going crazy)</li>
+              <li>Attacks peak within 10 minutes</li>
+              <li>NOT triggered by specific phobia situations</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>12-month: ~3.1%; Lifetime: ~5.2%</li>
+              <li>More common in women</li>
+              <li>Often leads to agoraphobia development</li>
+              <li>People often seek ER care (mistaking for cardiac event)</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors</div>
+            <ul>
+              <li><span class="tag tag-bio">Bio</span>: Locus coeruleus → norepinephrine surges → sympathetic nervous system activation</li>
+              <li><span class="tag tag-cond">Conditioning</span>: Interoceptive conditioning — panic conditioned to internal bodily sensations</li>
+              <li><span class="tag tag-psych">Psych/Cognitive</span>: Catastrophic misinterpretation of somatic cues ("I'm having a heart attack")</li>
+              <li><span class="tag tag-psych">Anxiety sensitivity</span>: fear of one's own anxiety symptoms (Anxiety Sensitivity Index)</li>
+              <li><span class="tag tag-bio">Bio</span>: Slower extinction of conditioned fear; amygdala hyperactivity</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Treatment</div>
+            <ul>
+              <li><span class="tag tag-treat">CBT with interoceptive exposure</span> — deliberately induce bodily sensations in session (hyperventilation, spinning) to extinguish fear</li>
+              <li>Challenge catastrophic misinterpretations</li>
+              <li><span class="tag tag-treat">SSRIs/SNRIs</span> — first-line medications</li>
+              <li><span class="tag tag-treat">Benzodiazepines</span> — short-term only; risk of dependence</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGORAPHOBIA -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-anxiety">🏠</div>
+          <div>
+            <div class="disorder-name">Agoraphobia</div>
+            <div class="disorder-abbr">Chapter 5</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>Disproportionate fear/anxiety about ≥2 situations where escape would be difficult or help unavailable</li>
+              <li>Common situations: outside home alone, public transportation, open spaces, enclosed spaces, standing in line/crowd</li>
+              <li>Situations avoided, require companion, or endured with intense anxiety</li>
+              <li>Duration ≥6 months; causes significant distress/impairment</li>
+              <li>Recognized as distinct disorder only in DSM-5</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology & Risk</div>
+            <ul>
+              <li>12-month: ~1.7%; Lifetime: ~2.6%</li>
+              <li>Often comorbid with panic disorder</li>
+              <li>Risk: genetic vulnerability, life events</li>
+              <li>Severe cases: individuals may become housebound</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAD -->
+    <div class="disorder-card" onclick="toggleCard(this)">
+      <div class="disorder-header">
+        <div class="disorder-title-group">
+          <div class="disorder-icon icon-anxiety">😰</div>
+          <div>
+            <div class="disorder-name">Generalized Anxiety Disorder</div>
+            <div class="disorder-abbr">GAD · Chapter 5</div>
+          </div>
+        </div>
+        <span class="chevron">▾</span>
+      </div>
+      <div class="disorder-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <div class="info-block-label">DSM-5-TR Criteria</div>
+            <ul>
+              <li>Excessive, uncontrollable worry about multiple topics</li>
+              <li>Present ≥50% of days for ≥6 months</li>
+              <li>≥3 symptoms (1 in children): restlessness, fatigue, concentration difficulty, irritability, muscle tension, sleep disturbance</li>
+              <li>Worry difficult to control</li>
+              <li>Causes significant distress/impairment</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Epidemiology</div>
+            <ul>
+              <li>12-month: ~2.9%; Lifetime: ~6.2%</li>
+              <li>More common in women</li>
+              <li>Most likely anxiety disorder to cause marital distress</li>
+              <li>High comorbidity with MDD (shared genetic vulnerability)</li>
+              <li>Chronic, often poorly recognized</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Risk Factors</div>
+            <ul>
+              <li><span class="tag tag-psych">Cognitive</span>: Contrast avoidance model — worry reduces emotional volatility; people with GAD find sudden emotional shifts highly aversive</li>
+              <li><span class="tag tag-psych">Cognitive</span>: Intolerance of uncertainty</li>
+              <li><span class="tag tag-bio">Bio</span>: GABA, serotonin, norepinephrine dysfunction</li>
+              <li><span class="tag tag-psych">Psych</span>: Neuroticism, behavioral inhibition</li>
+              <li><span class="tag tag-cond">Conditioning</span>: Sustained negative beliefs about future; perceived lack of control</li>
+            </ul>
+          </div>
+          <div class="info-block">
+            <div class="info-block-label">Treatment</div>
+            <ul>
+              <li><span class="tag tag-treat">CBT</span> — exposure to feared outcomes; challenge negative beliefs; tolerate uncertainty</li>
+              <li><span class="tag tag-treat">Relaxation training</span> — progressive muscle relaxation, imagery</li>
+              <li><span class="tag tag-treat">Mindfulness/Acceptance</span> — manage distress without suppression</li>
+              <li><span class="tag tag-treat">Unified Protocol</span> — transdiagnostic approach for internalizing disorders</li>
+              <li><span class="tag tag-treat">SSRIs/SNRIs</span> — first-line medications</li>
+              <li>Benzodiazepines: no longer first-line (addictive, cognitive side effects)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end disorder-grid -->
+
+  <div class="summary-box" style="margin-top:30px;">
+    <h4>📌 Cross-Cutting Risk Factors (Anxiety Disorders)</h4>
+    <p>All anxiety disorders share: <strong>fear conditioning (Mowrer's two-factor model)</strong>, slower extinction of conditioned fear, heightened <strong>amygdala reactivity</strong>, diminished <strong>medial prefrontal cortex</strong> activity, disruptions in <strong>GABA, serotonin, norepinephrine</strong>, <strong>neuroticism</strong>, <strong>behavioral inhibition</strong>, and cognitive styles including attention to threat, perceived lack of control, and intolerance of uncertainty. Women are ~2× more likely to experience anxiety disorders. Countries with war/persecution and high income inequality show higher prevalence.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  TAB 2: RISK FACTOR COMPARE                                  -->
+<!-- ============================================================ -->
+<div id="tab-compare" class="section">
+  <div class="section-header">
+    <h2>Risk Factor Comparison</h2>
+    <p>Compare and contrast risk factors across disorders — a key exam skill.</p>
+  </div>
+
+  <div class="compare-wrap" style="margin-bottom:30px;">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Risk Domain</th>
+          <th>MDD</th>
+          <th>Bipolar I</th>
+          <th>Anxiety Disorders</th>
+          <th>Notes / Differences</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Heritability</td>
+          <td>~0.37 (moderate)</td>
+          <td>~0.93 (very high)</td>
+          <td>~0.50–0.60</td>
+          <td>BD is among most heritable disorders; MDD is moderate; BD genes overlap with schizophrenia</td>
+        </tr>
+        <tr>
+          <td>Gender</td>
+          <td>2× women</td>
+          <td>Equal M/W (more depressive episodes in women)</td>
+          <td>~2× women</td>
+          <td>BD unique in equal gender prevalence at diagnosis</td>
+        </tr>
+        <tr>
+          <td>Amygdala</td>
+          <td>Elevated activation</td>
+          <td>Elevated activation</td>
+          <td>Elevated activation</td>
+          <td>Shared across all; amygdala hyperreactivity is a common pathway</td>
+        </tr>
+        <tr>
+          <td>Prefrontal Cortex</td>
+          <td>Diminished</td>
+          <td>Diminished</td>
+          <td>Diminished (medial PFC)</td>
+          <td>All show impaired emotion regulation; mPFC regulates amygdala</td>
+        </tr>
+        <tr>
+          <td>Striatum / Reward</td>
+          <td>Diminished (low reward sensitivity)</td>
+          <td>Elevated (high reward sensitivity → mania)</td>
+          <td>Not a primary feature</td>
+          <td>KEY DIFFERENCE: MDD = blunted reward; BD = heightened reward</td>
+        </tr>
+        <tr>
+          <td>Neuroticism</td>
+          <td>✓ Strong predictor</td>
+          <td>✓ Predicts depressive episodes</td>
+          <td>✓ Strong predictor (~2× risk)</td>
+          <td>Shared across all internalizing disorders</td>
+        </tr>
+        <tr>
+          <td>Childhood Adversity</td>
+          <td>✓ Strong predictor</td>
+          <td>✓ Predicts depressive episodes</td>
+          <td>✓ (~50% with anxiety disorder report childhood abuse)</td>
+          <td>Shared vulnerability; promotes negative schemas and low perceived control</td>
+        </tr>
+        <tr>
+          <td>Negative Life Events</td>
+          <td>✓ Strongly triggers episodes</td>
+          <td>✓ Triggers depression; goal-attainment events trigger mania</td>
+          <td>✓ Triggers onset; perceived lack of control important</td>
+          <td>BD unique: positive goal-attainment events can trigger mania (not just negative events)</td>
+        </tr>
+        <tr>
+          <td>Sleep / Circadian</td>
+          <td>✓ Key factor; insomnia predicts onset/relapse</td>
+          <td>✓ Sleep deprivation can experimentally trigger mania</td>
+          <td>Insomnia common comorbidity but not central etiological factor</td>
+          <td>Sleep disruption especially critical for BD mania; treating insomnia helps both MDD and BD</td>
+        </tr>
+        <tr>
+          <td>Pro-inflammatory Cytokines</td>
+          <td>Elevated (IL-6, TNF-alpha); sickness behavior syndrome</td>
+          <td>Elevated (IL-6, TNF-alpha)</td>
+          <td>Not primary factor</td>
+          <td>Shared between MDD and BD; not central in anxiety</td>
+        </tr>
+        <tr>
+          <td>Conditioning</td>
+          <td>Behavioral activation deficits</td>
+          <td>Not a primary model</td>
+          <td>✓ Central mechanism (Mowrer's two-factor model)</td>
+          <td>Fear conditioning fundamental to anxiety; not to mood disorders</td>
+        </tr>
+        <tr>
+          <td>Cognitive Models</td>
+          <td>Beck's triad, hopelessness, rumination</td>
+          <td>Similar to MDD for depression; high reward sensitivity/goal-pursuit for mania</td>
+          <td>Catastrophic misinterpretation, intolerance of uncertainty, attention to threat, contrast avoidance (GAD)</td>
+          <td>Rumination spans depression AND anxiety; GAD has unique contrast avoidance model</td>
+        </tr>
+        <tr>
+          <td>Social Support</td>
+          <td>Low support → major risk (40% vs. 4% depression risk)</td>
+          <td>Low support → depressive episodes</td>
+          <td>Social isolation → elevated risk</td>
+          <td>Social support buffers depression most strongly in literature</td>
+        </tr>
+        <tr>
+          <td>Behavioral Inhibition</td>
+          <td>Not a primary risk factor</td>
+          <td>Not a primary risk factor</td>
+          <td>✓ Strong predictor; especially for social anxiety (3.79× risk)</td>
+          <td>Specific to anxiety disorders; not mood disorders</td>
+        </tr>
+        <tr>
+          <td>Prepared Learning</td>
+          <td>Not applicable</td>
+          <td>Not applicable</td>
+          <td>✓ Specific phobia — evolutionary readiness to fear certain stimuli</td>
+          <td>Unique to specific phobia</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="risk-grid">
+    <div class="risk-card">
+      <h3><span class="dot dot-mood"></span>MDD vs. Bipolar I</h3>
+      <div class="risk-section">
+        <div class="risk-section-title">Shared</div>
+        <div class="risk-item">Elevated amygdala activity <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Diminished prefrontal cortex <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Childhood adversity → depressive episodes <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Neuroticism → depressive episodes <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Pro-inflammatory cytokines <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Sleep/circadian disruptions <span class="shared-label">SHARED</span></div>
+      </div>
+      <div class="risk-section">
+        <div class="risk-section-title">MDD Unique</div>
+        <div class="risk-item">Blunted reward sensitivity / low striatal activity</div>
+        <div class="risk-item">Heritability 0.37 (moderate)</div>
+        <div class="risk-item">Cognitive models: rumination, hopelessness, Beck's triad</div>
+        <div class="risk-item">Negative life events are primary trigger</div>
+      </div>
+      <div class="risk-section">
+        <div class="risk-section-title">BD-I Unique</div>
+        <div class="risk-item">Elevated reward sensitivity / high striatal activity → mania</div>
+        <div class="risk-item">Heritability 0.93 (very high)</div>
+        <div class="risk-item">Goal-attainment life events trigger mania</div>
+        <div class="risk-item">Sleep deprivation triggers mania experimentally</div>
+        <div class="risk-item">Genetic overlap with schizophrenia</div>
+        <div class="risk-item">Dopamine dysregulation key for mania</div>
+      </div>
+    </div>
+
+    <div class="risk-card">
+      <h3><span class="dot dot-anxiety"></span>Depression vs. Anxiety</h3>
+      <div class="risk-section">
+        <div class="risk-section-title">Shared (Internalizing Spectrum)</div>
+        <div class="risk-item">Neuroticism <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Childhood adversity <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Amygdala hyperreactivity <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Diminished prefrontal cortex <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Low social support <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Rumination contributes to both <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Genetic overlap (especially GAD ↔ MDD) <span class="shared-label">SHARED</span></div>
+        <div class="risk-item">Women 2× more affected <span class="shared-label">SHARED</span></div>
+      </div>
+      <div class="risk-section">
+        <div class="risk-section-title">Depression Unique</div>
+        <div class="risk-item">Blunted reward sensitivity → anhedonia</div>
+        <div class="risk-item">Pro-inflammatory cytokines / sickness behavior</div>
+        <div class="risk-item">Hopelessness (global/stable attributions)</div>
+        <div class="risk-item">Disrupted circadian rhythms → central feature</div>
+      </div>
+      <div class="risk-section">
+        <div class="risk-section-title">Anxiety Unique</div>
+        <div class="risk-item">Fear conditioning / Mowrer's two-factor model</div>
+        <div class="risk-item">Behavioral inhibition (especially social anxiety)</div>
+        <div class="risk-item">Prepared learning (specific phobia)</div>
+        <div class="risk-item">Slowed extinction of conditioned fear</div>
+        <div class="risk-item">Interoceptive conditioning (panic disorder)</div>
+        <div class="risk-item">Contrast avoidance model (GAD)</div>
+        <div class="risk-item">Perceived lack of control / intolerance of uncertainty</div>
+        <div class="risk-item">Heightened attention to threat cues</div>
+        <div class="risk-item">Anxiety sensitivity (panic)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--  TAB 3: MULTIPLE CHOICE QUIZ                                 -->
+<!-- ============================================================ -->
+<div id="tab-quiz" class="section">
+  <div class="section-header">
+    <h2>Multiple Choice Practice</h2>
+    <p>25 questions covering DSM criteria, epidemiology, risk factors, and treatments.</p>
+  </div>
+  <div class="quiz-meta">
+    <div class="quiz-score">Score: <span id="quizScore">0</span> / <span id="quizTotal">0</span> answered</div>
+    <button class="btn btn-ghost" onclick="resetQuiz()">↺ Reset All</button>
+  </div>
+  <div id="quiz-container"></div>
+</div>
+
+<!-- ============================================================ -->
+<!--  TAB 4: VIGNETTES                                            -->
+<!-- ============================================================ -->
+<div id="tab-vignettes" class="section">
+  <div class="section-header">
+    <h2>Case Vignettes</h2>
+    <p>Practice identifying diagnoses and applying clinical knowledge. Reveal answers one question at a time.</p>
+  </div>
+  <div id="vignettes-container"></div>
+</div>
+
+<!-- ============================================================ -->
+<!--  TAB 5: FLASHCARDS                                           -->
+<!-- ============================================================ -->
+<div id="tab-flashcards" class="section">
+  <div class="section-header">
+    <h2>Flashcards</h2>
+    <p>All key terms from Chapters 3, 4, and 5. Click a card to flip it.</p>
+  </div>
+  <div class="fc-filter-bar">
+    <button class="fc-filter active" onclick="filterCards('all', this)">All</button>
+    <button class="fc-filter" onclick="filterCards('ch3', this)">Ch. 3 Terms</button>
+    <button class="fc-filter" onclick="filterCards('ch4', this)">Ch. 4 — Mood</button>
+    <button class="fc-filter" onclick="filterCards('ch5', this)">Ch. 5 — Anxiety</button>
+    <div class="fc-stats" id="fc-stats">Showing 0 cards</div>
+  </div>
+  <div class="fc-grid" id="fc-grid"></div>
+</div>
+
+</div><!-- end container -->
+
+<script>
+// ============================
+// TAB NAVIGATION
+// ============================
+function showTab(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+
+// ============================
+// QUIZ DATA
+// ============================
+const quizQuestions = [
+  {
+    text: "Maria has experienced 6 weeks of persistent sadness, inability to feel pleasure, significant weight loss, hypersomnia, and difficulty concentrating, causing her to miss work. What is the most likely diagnosis?",
+    vignette: true,
+    options: ["Persistent Depressive Disorder", "Major Depressive Disorder", "Bipolar II Disorder", "Cyclothymic Disorder"],
+    correct: 1,
+    explanation: "Maria meets criteria for MDD: ≥5 symptoms (sad mood, anhedonia, weight loss, hypersomnia, concentration difficulty) lasting ≥2 weeks with significant impairment. PDD requires ≥2 years; BD-II requires hypomania."
+  },
+  {
+    text: "Which DSM-5-TR depressive disorder is characterized by ≥2 years of chronic low mood with fewer than 5 symptoms?",
+    options: ["Major Depressive Disorder", "Disruptive Mood Dysregulation Disorder", "Persistent Depressive Disorder", "Cyclothymic Disorder"],
+    correct: 2,
+    explanation: "Persistent Depressive Disorder (PDD/dysthymia) requires depressed mood most of the day more than half the time for ≥2 years with only ≥2 additional symptoms. Despite fewer symptoms, its chronicity often produces worse outcomes than MDD."
+  },
+  {
+    text: "Tom, 28, has been increasingly euphoric for 10 days. He has gone 3 nights without sleeping, started 5 new business ventures simultaneously, and spent $30,000 on 'investments.' He has been hospitalized. What diagnosis fits?",
+    vignette: true,
+    options: ["Bipolar II Disorder", "Cyclothymic Disorder", "Bipolar I Disorder", "Major Depressive Disorder with psychotic features"],
+    correct: 2,
+    explanation: "Tom meets criteria for Bipolar I: a manic episode (elevated mood, decreased sleep, goal-directed activity, excessive spending, ≥1 week requiring hospitalization). BD-II requires hypomania, which is less severe and does not require hospitalization."
+  },
+  {
+    text: "Which of the following BEST distinguishes a manic episode from a hypomanic episode?",
+    options: [
+      "Duration: mania requires ≥7 days; hypomania ≥4 days",
+      "Hypomania involves psychotic features; mania does not",
+      "Mania causes marked impairment or hospitalization; hypomania does not",
+      "Hypomania involves elevated mood; mania involves only irritability"
+    ],
+    correct: 2,
+    explanation: "The key distinction is severity of impairment: mania causes significant impairment, requires hospitalization, or involves psychosis. Hypomania shows observable change but without marked functional impairment. Duration differences (7 days vs. 4 days) are also true but impairment is the primary clinical distinction."
+  },
+  {
+    text: "Which brain structure is associated with INCREASED activity in depression, reflecting hypersensitivity to negative stimuli?",
+    options: ["Striatum", "Dorsolateral prefrontal cortex", "Amygdala", "Hippocampus"],
+    correct: 2,
+    explanation: "The amygdala shows elevated activity in MDD when exposed to emotionally relevant stimuli. This overreactivity to negative stimuli may represent a vulnerability marker, as it is also seen in relatives of depressed individuals who have never been depressed."
+  },
+  {
+    text: "A key difference between reward processing in MDD versus Bipolar I disorder involves the striatum. Which statement is accurate?",
+    options: [
+      "Both MDD and BD show elevated striatal activity in response to reward",
+      "MDD shows diminished striatal activity; BD shows elevated striatal activity in response to reward",
+      "MDD shows elevated striatal activity; BD shows diminished striatal activity",
+      "Neither disorder involves striatal abnormalities"
+    ],
+    correct: 1,
+    explanation: "This is a critical distinction: in MDD, the striatum (especially nucleus accumbens) shows DIMINISHED activation to reward cues, contributing to anhedonia and lack of motivation. In Bipolar I, striatal activity is ELEVATED in response to reward, consistent with heightened reward sensitivity as a model of mania."
+  },
+  {
+    text: "According to hopelessness theory, which type of attribution for a negative life event most increases risk for depression?",
+    options: [
+      "Unstable and specific",
+      "Stable and global",
+      "Unstable and global",
+      "Stable and specific"
+    ],
+    correct: 1,
+    explanation: "Hopelessness theory (Abramson et al., 1989) proposes that stable (permanent) + global (affects many domains) attributions for negative events lead to hopelessness, which triggers depression. Example: 'I failed because I lack intelligence' (stable, global) vs. 'I was exhausted' (unstable, specific)."
+  },
+  {
+    text: "Which psychological theory of depression proposes that a tendency to repetitively dwell on sad feelings — particularly brooding — increases risk, and may explain higher female depression rates?",
+    options: ["Beck's Cognitive Theory", "Hopelessness Theory", "Rumination Theory (Nolen-Hoeksema)", "Contrast Avoidance Model"],
+    correct: 2,
+    explanation: "Nolen-Hoeksema's Rumination Theory proposes that tendencies to repetitively dwell on sadness (especially brooding) predict onset of MDD. Women ruminate more than men, which may help explain the 2:1 female-to-male ratio in depression."
+  },
+  {
+    text: "The sickness behavior syndrome — decreased motor activity, social withdrawal, reduced appetite, and reduced motivation — is linked to which biological factor in depression?",
+    options: ["Cortisol dysregulation", "Pro-inflammatory cytokines", "GABA deficiency", "Dopamine depletion"],
+    correct: 1,
+    explanation: "Pro-inflammatory cytokines (e.g., IL-6, TNF-alpha) can trigger sickness behavior, which overlaps substantially with MDD symptoms. Elevated cytokines are found in depression and BD; IL-6 predicts increases in depressive symptoms prospectively."
+  },
+  {
+    text: "Which first-line psychological treatments have strong RCT support for Major Depressive Disorder? (Select ALL that apply — best answer)",
+    options: [
+      "Cognitive Therapy + Interpersonal Psychotherapy only",
+      "Cognitive Therapy, Interpersonal Psychotherapy, and Behavioral Activation",
+      "Psychoanalytic therapy and EMDR",
+      "Dialectical Behavior Therapy and Schema Therapy"
+    ],
+    correct: 1,
+    explanation: "CT, IPT, and BA all have strong RCT support for MDD. CT works as well as antidepressants and offers relapse protection. IPT targets interpersonal problems. BA alone performs as well as full CT, challenging the necessity of cognitive restructuring per se."
+  },
+  {
+    text: "Lithium is the most researched treatment for bipolar disorder. Which statement about lithium is MOST accurate?",
+    options: [
+      "Lithium is effective for acute mania but does not reduce relapse rates",
+      "Lithium can be used without monitoring due to its safety profile",
+      "Up to 80% experience benefit; relapse is ~40% on lithium vs ~60% on placebo; blood monitoring is required",
+      "Lithium is FDA-approved as monotherapy for bipolar depression"
+    ],
+    correct: 2,
+    explanation: "Lithium: up to 80% benefit; 40% relapse on lithium vs. 60% on placebo. Because lithium levels can be toxic, regular blood tests are required. It is recommended lifelong for BD-I. Antipsychotics (not lithium) have more specific FDA approval for bipolar depression."
+  },
+  {
+    text: "James, age 30, presents with anxiety. He avoids public speaking, meeting new people, and social gatherings. He believes others will find him stupid, spends days before and after social events ruminating about his performance, and has turned down promotions. What is the diagnosis?",
+    vignette: true,
+    options: ["Specific Phobia (Situational type)", "Panic Disorder with Agoraphobia", "Social Anxiety Disorder", "Generalized Anxiety Disorder"],
+    correct: 2,
+    explanation: "James meets criteria for Social Anxiety Disorder: persistent fear of social scrutiny, concern about being judged negatively, avoidance of social situations, and significant functional impairment. Unlike GAD, the worry is specifically about social evaluation, not multiple unrelated topics."
+  },
+  {
+    text: "The contrast avoidance model is specifically proposed to explain which anxiety disorder?",
+    options: ["Specific Phobia", "Panic Disorder", "Social Anxiety Disorder", "Generalized Anxiety Disorder (GAD)"],
+    correct: 3,
+    explanation: "The contrast avoidance model (Newman & Llera, 2011) was developed to explain why people with GAD maintain worry. The model proposes that worry reduces the aversiveness of sudden emotional shifts — people with GAD find emotional volatility highly aversive, so they prefer maintaining a chronically negative state."
+  },
+  {
+    text: "Interoceptive conditioning refers to which process specifically relevant to panic disorder?",
+    options: [
+      "Classical conditioning of fear to external environments through observation",
+      "Classical conditioning of panic attacks to internal bodily sensations of arousal",
+      "Operant conditioning of avoidance behaviors that maintain phobias",
+      "Genetic transmission of sensitivity to interoceptive stimuli"
+    ],
+    correct: 1,
+    explanation: "Interoceptive conditioning: after a first panic attack, a person becomes classically conditioned to fear their own bodily sensations (e.g., rapid heart rate, shortness of breath). These conditioned responses to interoceptive stimuli are slower to extinguish than responses to external stimuli, explaining panic disorder's persistence."
+  },
+  {
+    text: "Which neurotransmitter system is MOST specifically implicated in the locus coeruleus model of panic disorder?",
+    options: ["GABA", "Serotonin", "Norepinephrine", "Dopamine"],
+    correct: 2,
+    explanation: "The locus coeruleus is the brain's major source of norepinephrine. Surges in norepinephrine trigger sympathetic nervous system activation (fight-or-flight). Drugs that stimulate the locus coeruleus can trigger panic attacks; people with panic disorder show more dramatic responses to norepinephrine-releasing drugs."
+  },
+  {
+    text: "Mowrer's two-factor model explains how anxiety disorders develop and persist. Which sequence is correct?",
+    options: [
+      "Operant conditioning (avoidance) → Classical conditioning (fear) → disorder maintained",
+      "Classical conditioning pairs neutral stimulus with feared stimulus → Operant conditioning: avoidance reduces fear → avoidance reinforced, fear maintained",
+      "Genetic vulnerability → Classical conditioning → disorder develops independently of avoidance",
+      "Verbal instruction → Extinction failure → Operant conditioning reinforces fear"
+    ],
+    correct: 1,
+    explanation: "Mowrer's two-factor model: Step 1 — Classical conditioning pairs a neutral stimulus (CS) with an aversive stimulus (UCS), creating conditioned fear. Step 2 — Operant conditioning: the person avoids the CS, which reduces fear (negative reinforcement), maintaining avoidance and preventing extinction of the conditioned fear."
+  },
+  {
+    text: "Prepared learning as a theory of specific phobia proposes that:",
+    options: [
+      "People can be conditioned to fear any stimulus equally if paired with an aversive event",
+      "People are evolutionarily primed to more easily learn fears of stimuli with survival significance (snakes, heights, angry faces)",
+      "Phobias are prepared in utero and not influenced by experience",
+      "Verbal instruction is the primary mode of acquiring a prepared fear"
+    ],
+    correct: 1,
+    explanation: "Prepared learning (Seligman, 1971) proposes that evolution has 'biologically prepared' humans to acquire fears of stimuli that were historically dangerous (snakes, heights, angry faces) more quickly and automatically than neutral stimuli. Monkeys can be conditioned to fear snakes but not flowers (Cook & Mineka, 1989)."
+  },
+  {
+    text: "Sarah, age 25, experiences sudden, intense episodes of terror with heart pounding, sweating, chest pain, and fear of dying, which peak within minutes and seem to come 'out of nowhere.' She worries about having another attack and has started avoiding the subway. What is the diagnosis?",
+    vignette: true,
+    options: ["Social Anxiety Disorder", "Specific Phobia (Situational type)", "Generalized Anxiety Disorder", "Panic Disorder"],
+    correct: 3,
+    explanation: "Sarah meets criteria for Panic Disorder: recurrent unexpected panic attacks (physical symptoms peaking within 10 minutes) plus ≥1 month of concern about future attacks and behavioral change (avoidance of subway). The unexpected, spontaneous nature and the worry about recurrence are key distinguishing features."
+  },
+  {
+    text: "Which epidemiologic finding is MOST accurate about anxiety disorders?",
+    options: [
+      "Anxiety disorders affect men and women equally",
+      "Anxiety disorders are the most common type of psychological disorder, with ~28% lifetime prevalence",
+      "Most anxiety disorders first develop in late adulthood",
+      "Only 5% of people with one anxiety disorder develop a second"
+    ],
+    correct: 1,
+    explanation: "Anxiety disorders as a group are the most common psychological disorders. In the NCS-R, ~28% of adults met lifetime criteria — and this is likely an underestimate as people forget earlier anxiety episodes. Onset is typically early (>66% by age 21); women are ~2× more affected; >50% with one anxiety disorder develop another."
+  },
+  {
+    text: "Which of the following is a KEY difference between behavioral inhibition and neuroticism as risk factors for anxiety disorders?",
+    options: [
+      "Behavioral inhibition is a trait measured in adults; neuroticism is assessed in infants",
+      "Behavioral inhibition is observable in infants as young as 4 months; it specifically involves agitation to novel stimuli, and is especially predictive of social anxiety disorder",
+      "Neuroticism predicts anxiety but not depression; behavioral inhibition predicts depression but not anxiety",
+      "Only neuroticism has been shown to predict anxiety disorders prospectively"
+    ],
+    correct: 1,
+    explanation: "Behavioral inhibition is observable in infants (even at 4 months) as agitation/crying in response to novelty. It is a particularly powerful predictor of social anxiety disorder (3.79× increased risk). Neuroticism is a broader trait assessed across development. Both predict anxiety disorders, and neuroticism also strongly predicts depression."
+  },
+  {
+    text: "The primary psychological treatment for anxiety disorders across all types is:",
+    options: [
+      "Mindfulness-Based Cognitive Therapy (MBCT)",
+      "Psychoeducation combined with medication",
+      "Exposure treatment (confronting feared stimuli in a graded hierarchy)",
+      "Relaxation training and biofeedback"
+    ],
+    correct: 2,
+    explanation: "Exposure treatment is the common core of effective psychological treatment for all anxiety disorders. Therapists and clients construct a graded hierarchy of feared stimuli and systematically confront them, allowing conditioned fear to be extinguished. CBT with exposure outperforms control conditions by ~3× odds of response."
+  },
+  {
+    text: "Which statement about the epidemiology of suicide is MOST accurate?",
+    options: [
+      "Women are more likely than men to die from suicide in the United States",
+      "Adolescents have higher rates of completed suicide than older adults",
+      "Men are ~4× more likely than women to die from suicide in the U.S.; women are more likely to make non-fatal attempts",
+      "Suicide rates have been increasing worldwide over the past 20 years"
+    ],
+    correct: 2,
+    explanation: "In the U.S., men are ~4× more likely to die from suicide. Women are more likely to attempt suicide without dying (more non-lethal methods). Worldwide rates have been DECREASING in most regions (exception: Americas and Eastern Mediterranean). Adolescents have lower completed suicide rates than adults."
+  },
+  {
+    text: "Joiner's interpersonal model of suicidality proposes that suicidal ideation is primarily driven by:",
+    options: [
+      "Neurobiological serotonin deficiency and poor problem-solving",
+      "Perceived burdensomeness to others and a lack of belongingness",
+      "Hopelessness about the future and low social support",
+      "Childhood adversity and cognitive distortions about death"
+    ],
+    correct: 1,
+    explanation: "Joiner's (2005) model specifically identifies two key factors: (1) perceived sense of being a burden to others, and (2) lack of belongingness/social isolation. The theory predicts that ideation is amplified when both are present. Dozens of studies show high endorsement of burdensomeness and lack of belonging among those with suicidal ideation."
+  },
+  {
+    text: "Elena, a 35-year-old, worries constantly about her children's safety, her finances, her job performance, and her health. She has felt this way for 8 months and describes feeling tense all the time, having trouble sleeping, and being easily irritable. Her worrying feels impossible to control. What is the most likely diagnosis?",
+    vignette: true,
+    options: ["Panic Disorder", "Social Anxiety Disorder", "Generalized Anxiety Disorder", "Specific Phobia"],
+    correct: 2,
+    explanation: "Elena meets GAD criteria: excessive, uncontrollable worry about multiple topics (children, finances, job, health) for ≥6 months, with ≥3 associated symptoms (tension/restlessness, sleep disturbance, irritability). GAD is unique in that the worry spans multiple life domains and lasts at least 6 months."
+  },
+  {
+    text: "Which of the following treatments is MOST appropriate when depression has not responded to an adequate antidepressant trial?",
+    options: [
+      "Switching to a benzodiazepine",
+      "Discontinuing all treatment for 6 months",
+      "Electroconvulsive Therapy (ECT) — the most powerful biological treatment for refractory depression",
+      "Increasing the dose of the same SSRI indefinitely"
+    ],
+    correct: 2,
+    explanation: "ECT is more powerful than antidepressant medications for treating depression and is considered when antidepressants have failed. It involves passing a brief electrical current through the brain to induce a seizure. Despite its radical appearance, it has significant efficacy evidence. rTMS and esketamine are other options for treatment-resistant depression."
+  }
+];
+
+let answeredCount = 0;
+let correctCount = 0;
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizQuestions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = 'q-' + i;
+
+    let vigHtml = q.vignette ? `<div class="q-vignette">📋 Case Vignette — Read carefully before answering.</div>` : '';
+
+    const optionsHtml = q.options.map((opt, j) => {
+      const letters = ['A','B','C','D'];
+      return `<div class="option" onclick="selectOption(this, ${i}, ${j})" data-index="${j}">
+        <div class="opt-letter">${letters[j]}</div>
+        <span>${opt}</span>
+      </div>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="q-number">Question ${i+1} of ${quizQuestions.length}</div>
+      ${vigHtml}
+      <div class="q-text">${q.text}</div>
+      <div class="options">${optionsHtml}</div>
+      <div class="q-explanation" id="exp-${i}">${q.explanation}</div>
+    `;
+    container.appendChild(card);
+  });
+  updateScore();
+}
+
+function selectOption(el, qIndex, optIndex) {
+  const card = document.getElementById('q-' + qIndex);
+  if (card.querySelector('.locked')) return; // already answered
+
+  const options = card.querySelectorAll('.option');
+  const q = quizQuestions[qIndex];
+
+  options.forEach(opt => opt.classList.add('locked'));
+  el.classList.add('selected');
+
+  if (optIndex === q.correct) {
+    el.classList.add('correct');
+    correctCount++;
+  } else {
+    el.classList.add('wrong');
+    options[q.correct].classList.add('correct');
+  }
+
+  document.getElementById('exp-' + qIndex).classList.add('show');
+  answeredCount++;
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById('quizScore').textContent = correctCount + '/' + answeredCount;
+  document.getElementById('quizTotal').textContent = quizQuestions.length;
+}
+
+function resetQuiz() {
+  answeredCount = 0;
+  correctCount = 0;
+  buildQuiz();
+}
+
+// ============================
+// VIGNETTES
+// ============================
+const vignettes = [
+  {
+    title: "The Exhausted Mother",
+    scenario: "Lisa, 42, has been struggling for 3 months. She cries most days, has lost 15 pounds without trying, wakes at 3 AM and can't return to sleep, and feels overwhelming guilt about 'being a burden.' She used to love cooking, but nothing gives her pleasure now. She missed her daughter's school play because she 'couldn't get off the couch.' She denies any periods of high energy or decreased need for sleep. This began after she was laid off.",
+    questions: [
+      {
+        q: "What is Lisa's DSM-5-TR diagnosis? Identify the key symptoms.",
+        a: "Major Depressive Disorder (MDD). Key symptoms: depressed mood, anhedonia (no pleasure from cooking/activities), significant weight loss, insomnia (early morning awakening), excessive guilt, fatigue/psychomotor retardation. She has ≥5 symptoms lasting ≥3 months (well beyond the 2-week minimum), with significant functional impairment. The stressor (job loss) may have triggered the episode, but the diagnosis is MDD — not 'adjustment disorder' — given severity and duration."
+      },
+      {
+        q: "What biological, psychological, sociocultural, and conditioning risk factors are relevant?",
+        a: "Biological: possible genetic vulnerability, amygdala hyperreactivity to negative events, blunted reward sensitivity (striatum), circadian/sleep disruption (early morning awakening). Psychological: negative cognitive schemas (guilt about 'being a burden'), possible hopelessness about her work future, rumination. Sociocultural: job loss (stressful life event), possible low social support post-layoff, potential SES stressors. Conditioning: stress dampening reward sensitivity, withdrawal creating less positive reinforcement (BA model)."
+      },
+      {
+        q: "What are the best-supported empirical treatments for Lisa?",
+        a: "Psychological: Cognitive Therapy (CT) to challenge excessive guilt/negative schemas — particularly relevant given her self-blaming. Interpersonal Psychotherapy (IPT) — addresses job loss as life transition. Behavioral Activation (BA) — re-engage with rewarding activities. Biological: SSRIs/SNRIs as first-line medication (60% show ≥50% symptom reduction). Continuing medications ≥6 months post-remission reduces relapse. MBCT after remission reduces recurrence risk. Light therapy could be explored given circadian issues."
+      }
+    ]
+  },
+  {
+    title: "The College Student's Unexpected Terror",
+    scenario: "David, 21, was studying in the library when he suddenly felt his heart pounding, couldn't catch his breath, felt his hands tingling, and was certain he was having a heart attack. He rushed to the ER, where no cardiac problem was found. Over the next 2 months, he had 4 more similar attacks, always unexpected. He now avoids the library, the cafeteria, and large lecture halls — anywhere he fears an attack might happen where he'd be 'trapped.' He spends hours each day worrying about when the next attack will occur.",
+    questions: [
+      {
+        q: "What is David's diagnosis? What diagnostic criteria does he meet?",
+        a: "Panic Disorder. Criteria met: (1) Recurrent unexpected panic attacks with ≥4 symptoms — palpitations, shortness of breath, tingling, fear of dying/heart attack; (2) ≥1 month of significant worry about future attacks and behavioral change (avoidance of library, cafeteria, lecture halls). Note: His avoidance of multiple places where escape is difficult also meets criteria for Agoraphobia as a comorbid diagnosis."
+      },
+      {
+        q: "Explain the interoceptive conditioning model as applied to David's case.",
+        a: "Interoceptive conditioning: Initially, an environmental stressor (studying in library) may have triggered physiological arousal (e.g., stress-related heart rate increase). This became a conditioned stimulus (CS) paired with a panic attack (the unconditioned response). After this first attack, David's own bodily sensations of arousal (rapid heart rate, tingling) became conditioned stimuli that trigger panic attacks. These interoceptive conditioned responses are slower to extinguish than those to external stimuli, explaining why attacks occur in many different settings."
+      },
+      {
+        q: "What empirically supported treatment approach would you recommend?",
+        a: "CBT with Interoceptive Exposure: (1) Psychoeducation about the nature of panic attacks (not heart attacks). (2) Challenge catastrophic misinterpretations of bodily sensations. (3) Interoceptive exposure exercises — deliberately induce anxiety sensations in session (e.g., rapid breathing, spinning, running in place) to extinguish the conditioned fear response. (4) Situational exposure — graded re-exposure to avoided settings. (5) Eliminate safety behaviors. Medications: SSRIs/SNRIs as adjunct if needed. Benzodiazepines only short-term if at all (addiction risk)."
+      }
+    ]
+  },
+  {
+    title: "The Soaring Executive",
+    scenario: "Marcus, 35, is a business consultant who was referred by his wife. For the past 10 days, he has slept only 2–3 hours per night but feels 'more energized than ever.' He has launched 3 new companies, maxed out credit cards buying equipment, and been giving speeches at 2 AM to 'followers' he met online. He speaks so quickly others can't follow him. He is irritated when anyone questions his plans, insisting he's been 'chosen for a special mission.' His wife reports this behavior is completely unlike him.",
+    questions: [
+      {
+        q: "What is Marcus's diagnosis and what specific symptoms support it?",
+        a: "Bipolar I Disorder — current manic episode. Symptoms: distinctly elevated mood + increased energy lasting ≥10 days; decreased need for sleep (2–3 hrs); inflated self-esteem/grandiosity ('chosen for a special mission'); increased goal-directed activity (3 companies); excessive involvement in risky activities (maxed credit cards); pressured/rapid speech (flight of ideas); irritability when questioned. The manic episode requires hospitalization or causes marked impairment, satisfying the BD-I criterion."
+      },
+      {
+        q: "Compare the biological risk factors for Marcus's condition versus someone with MDD.",
+        a: "BD-I: Heritability ~0.93 (vs. MDD ~0.37). Both show elevated amygdala activity and diminished prefrontal cortex. KEY DIFFERENCE: BD-I shows ELEVATED striatal and orbitofrontal activity in response to reward (consistent with Marcus's heightened goal-pursuit and excessive pleasure-seeking), whereas MDD shows DIMINISHED striatal activity (anhedonia). BD-I also shares genetic overlap with schizophrenia. Both may have elevated pro-inflammatory cytokines. High dopamine activity is more central in BD-I (mania). Sleep deprivation is an acute trigger for mania specifically."
+      },
+      {
+        q: "What are the evidence-based treatments for Marcus?",
+        a: "Acute: Mood stabilizers (lithium — up to 80% benefit; anticonvulsants like Depakote; antipsychotics like olanzapine for immediate calming). Lithium + antipsychotic combination for acute mania. Psychological (adjunct to medication): Psychoeducation (medication adherence, trigger recognition); CT adapted for BD; Family-Focused Therapy; IPT for social rhythm stabilization. Lifelong medication is recommended. Note: Antidepressants alone without mood stabilizer are contraindicated (can trigger mania). Treat comorbid insomnia with CBT-I as it can reduce manic risk."
+      }
+    ]
+  },
+  {
+    title: "The Catastrophizing Student",
+    scenario: "Amara, 26, is a graduate student who avoids most social situations. She declines invitations to study groups, conferences, and department events. When she must attend class, she arrives late and leaves early. She is convinced her classmates find her 'annoying and stupid.' After any interaction, she replays it for hours, focusing on anything she said imperfectly. Despite being highly intelligent, she has chosen not to pursue opportunities that would advance her career because they involve presentations or networking.",
+    questions: [
+      {
+        q: "What is Amara's diagnosis? What differentiates it from shyness or introversion?",
+        a: "Social Anxiety Disorder. Unlike shyness or introversion, Amara experiences: (1) intense fear of social scrutiny that is disproportionate and persistent; (2) significant functional impairment (avoiding career-advancing opportunities); (3) post-event processing (replaying perceived failures for hours); (4) avoidance that reinforces the cycle. Shyness involves discomfort but not the same degree of persistent fear, impairment, or post-event shame. Introversion is a preference, not an anxiety response."
+      },
+      {
+        q: "What cognitive model best explains Amara's social anxiety?",
+        a: "Clark & Wells's cognitive model: (1) Amara has overly negative self-evaluations of her social performance — believing classmates find her 'annoying and stupid' despite evidence to the contrary. (2) She focuses excessively on internal cues (how she's performing, what she might say wrong) rather than on the conversation partner — this is self-focused attention. (3) Safety behaviors (arriving late, leaving early, avoiding eye contact) prevent disconfirmation of her negative beliefs. (4) Post-event processing (replaying 'failures') maintains the negative schemas. Research shows: socially anxious people rate their social performance more negatively than objective observers do."
+      },
+      {
+        q: "What treatments have strong empirical support for this diagnosis?",
+        a: "CBT with exposure is most effective: (1) Behavioral experiments — engage in feared social situations to test whether others actually reject her; (2) Eliminate safety behaviors (late arrivals, avoiding eye contact); (3) Challenge overly negative self-evaluations; (4) Shift attention from internal monitoring to external social cues. Group therapy is especially useful — provides natural social exposure. SSRIs/SNRIs have strong evidence as medication. Virtual reality exposure effective as in-vivo. Internet-based CBT also effective."
+      }
+    ]
+  },
+  {
+    title: "The Worrier Who Can't Stop",
+    scenario: "Jordan, 30, describes their mind as never 'turning off.' They worry about their car, their job performance, their partner's health, world events, finances, and whether they left the stove on. Jordan says the worry is 'impossible to control' and has been this way for at least 9 months. They feel constantly restless and 'keyed up,' have tension headaches daily, and have difficulty falling asleep because of racing thoughts. They note the worries are not about one specific thing.",
+    questions: [
+      {
+        q: "What is Jordan's diagnosis and how does it differ from normal worry?",
+        a: "Generalized Anxiety Disorder (GAD). Jordan meets criteria: excessive, uncontrollable worry about multiple domains (car, job, partner, finances, world events) for ≥6 months with ≥3 symptoms (restlessness/'keyed up,' muscle tension/headaches, sleep disturbance). Normal worry is time-limited, proportionate, and can be set aside. GAD worry is pervasive, uncontrollable, and multi-topic. Jordan explicitly states the worry is 'impossible to control,' which is a key criterion. GAD differs from panic disorder (no unexpected attacks) and social anxiety (worry not limited to social evaluation)."
+      },
+      {
+        q: "Explain the contrast avoidance model as it applies to Jordan.",
+        a: "Newman & Llera's contrast avoidance model: Jordan may prefer maintaining chronic worry because it dampens the aversiveness of sudden emotional shifts. Research shows that people with GAD find sudden increases in negative emotion (emotional volatility) especially aversive. By staying in a chronically worried, mildly distressed state, Jordan avoids the shock of sudden emotional spikes when bad things happen. The study evidence: people assigned to worry before a stressor show smaller increases in psychophysiological arousal during the stressor than those assigned to relaxation. The cost is a continuously distressed baseline."
+      },
+      {
+        q: "What treatments are most supported for Jordan?",
+        a: "CBT for GAD: (1) Relaxation training — progressive muscle relaxation, diaphragmatic breathing (more evidence than most; helpful as a component). (2) Cognitive restructuring — challenge overestimations of threat probability. (3) Intolerance of uncertainty training — help Jordan tolerate ambiguity without needing to resolve it through worry. (4) Exposure to avoided feared outcomes (writing out 'worst-case scenarios' and tolerating them). (5) The Unified Protocol — transdiagnostic approach for internalizing disorders. Medications: SSRIs/SNRIs are first-line (benzodiazepines no longer recommended — addictive, cognitive side effects, relapse on discontinuation). Mindfulness/acceptance approaches also show promise."
+      }
+    ]
+  }
+];
+
+function buildVignettes() {
+  const container = document.getElementById('vignettes-container');
+  vignettes.forEach((vig, vi) => {
+    const card = document.createElement('div');
+    card.className = 'vignette-card';
+    
+    const questionsHtml = vig.questions.map((q, qi) => `
+      <div class="vignette-q">
+        <div class="vignette-q-label">Question ${qi+1}</div>
+        <div class="vignette-q-text">${q.q}</div>
+        <button class="reveal-btn" onclick="revealVigAnswer(this)">▶ Reveal Answer</button>
+        <div class="vignette-answer">${q.a}</div>
+      </div>
+    `).join('');
+
+    card.innerHTML = `
+      <div class="vignette-header">
+        <div>
+          <div class="vignette-label">Case Vignette ${vi+1}</div>
+          <div class="vignette-title">${vig.title}</div>
+        </div>
+      </div>
+      <div class="vignette-body">
+        <div class="vignette-text">${vig.scenario}</div>
+        <div class="vignette-questions">${questionsHtml}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function revealVigAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  answer.classList.toggle('show');
+  btn.textContent = answer.classList.contains('show') ? '▼ Hide Answer' : '▶ Reveal Answer';
+}
+
+// ============================
+// FLASHCARDS DATA
+// ============================
+const flashcards = [
+  // CH 3 TERMS
+  {chapter:'ch3', term:'DSM-5-TR', def:'Diagnostic and Statistical Manual of Mental Disorders, 5th Edition, Text Revision — the American Psychiatric Association\'s standard classification system for mental disorders, including diagnostic criteria, features, and epidemiology.'},
+  {chapter:'ch3', term:'Epidemiology', def:'The scientific study of the distribution, prevalence, incidence, and risk factors of disorders in populations. In psychopathology, epidemiology examines how common disorders are and who is most likely to be affected.'},
+  {chapter:'ch3', term:'Prevalence', def:'The total proportion of a population that has a disorder at a given time (point prevalence) or during a specified period (lifetime prevalence). Distinct from incidence, which refers only to new cases.'},
+  {chapter:'ch3', term:'Incidence', def:'The rate of new cases of a disorder in a population during a specific time period. Incidence differs from prevalence in that it counts only newly diagnosed cases.'},
+  {chapter:'ch3', term:'Comorbidity', def:'The co-occurrence of two or more diagnosable psychological or medical disorders in the same individual. High comorbidity among mood and anxiety disorders suggests shared underlying vulnerability factors.'},
+  {chapter:'ch3', term:'Diagnosis', def:'The process of identifying a disorder by systematically evaluating symptoms against established criteria (e.g., DSM-5-TR). A valid diagnosis requires reliability, validity, and clinical utility.'},
+  {chapter:'ch3', term:'Empirically Supported Treatments (ESTs)', def:'Psychological treatments that have been demonstrated through rigorous randomized controlled trials (RCTs) to be efficacious for specific disorders. ESTs must show replicable benefits over placebo or comparison treatments.'},
+  {chapter:'ch3', term:'Efficacy', def:'The degree to which a treatment produces beneficial outcomes under idealized, controlled experimental conditions (e.g., randomized controlled trials). Distinct from effectiveness, which refers to real-world outcomes.'},
+  {chapter:'ch3', term:'Effectiveness', def:'How well a treatment works in real-world clinical settings with typical patients. Effectiveness research often yields more modest results than efficacy trials because of greater patient diversity and less controlled conditions.'},
+  {chapter:'ch3', term:'Randomized Controlled Trials (RCTs)', def:'Research designs in which participants are randomly assigned to treatment conditions. RCTs are the gold standard for evaluating treatment efficacy because random assignment controls for confounding variables.'},
+  {chapter:'ch3', term:'Internalizing Disorders', def:'A broad cluster of psychological disorders characterized by directed-inward emotional experiences such as anxiety, depression, and somatic symptoms. Includes mood disorders, anxiety disorders, and trauma-related disorders. Contrasts with externalizing disorders.'},
+  {chapter:'ch3', term:'Externalizing Disorders', def:'A broad cluster of disorders characterized by behaviors directed outward, including aggression, conduct problems, substance use, and impulsivity. Contrasts with internalizing disorders.'},
+  {chapter:'ch3', term:'HiTOP Model', def:'Hierarchical Taxonomy of Psychopathology — a dimensional model of mental disorders organized hierarchically, with broad spectra (e.g., internalizing, externalizing) at the top and specific disorder facets below. An alternative to the categorical DSM approach.'},
+  {chapter:'ch3', term:'Cultural Concepts of Distress', def:'Culture-specific idioms, syndromes, or explanations of distress that may not correspond directly to DSM categories. Examples: ataque de nervios (Latino), taijin kyofusho (Japan), khyâl cap (Cambodian).'},
+  {chapter:'ch3', term:'Research Domain Criteria (RDoC)', def:'An NIMH framework for classifying mental disorders based on behavioral dimensions and neurobiological systems (circuits, genes, physiology) rather than DSM symptom clusters. Aims to bridge neuroscience and clinical research.'},
+  {chapter:'ch3', term:'Validity', def:'The degree to which a measure, diagnosis, or study accurately captures what it claims to measure. In diagnosis, validity includes construct validity (does it measure the right thing?) and predictive validity (does it predict course/treatment response?).'},
+  {chapter:'ch3', term:'Structured Interview', def:'A standardized diagnostic assessment in which a clinician asks a predetermined set of questions in a fixed order. Structured interviews (e.g., SCID) improve diagnostic reliability over unstructured clinical interviews.'},
+  {chapter:'ch3', term:'Meta-Analysis', def:'A statistical technique that combines results from multiple studies on the same topic to estimate the overall effect size. Meta-analyses provide stronger evidence than any single study by increasing statistical power.'},
+  {chapter:'ch3', term:'Placebo', def:'An inert treatment (e.g., sugar pill) given to a control group to account for the placebo effect — the improvement in symptoms that occurs due to expectations of improvement rather than the active treatment itself.'},
+  {chapter:'ch3', term:'Double-Blind Procedure', def:'A research design in which neither the participant nor the researcher administering the treatment knows which condition (active or placebo) the participant has been assigned to. Controls for both expectation effects and researcher bias.'},
+  {chapter:'ch3', term:'Longitudinal Design', def:'A research method that follows the same participants over a period of time to examine changes and establish temporal precedence (e.g., does Factor A precede Disorder B?). Stronger than cross-sectional designs for establishing causal relationships.'},
+  {chapter:'ch3', term:'Cross-Sectional Design', def:'A research design in which a sample is assessed at a single point in time. Cross-sectional studies can identify associations but cannot establish which came first (temporal order), limiting causal inference.'},
+  {chapter:'ch3', term:'Publication Bias', def:'The tendency for journals to publish studies with significant or positive results more than studies with null findings. This skews the literature and can lead to overestimates of treatment effectiveness or risk factor relationships.'},
+  {chapter:'ch3', term:'Dissemination', def:'The active process of spreading evidence-based practices from research settings into routine clinical practice. Research-to-practice gaps mean that many clients do not receive empirically supported treatments despite their availability.'},
+  {chapter:'ch3', term:'Taijin Kyofusho', def:'A Japanese cultural concept of distress involving intense fear of offending, embarrassing, or harming others through one\'s own appearance or behavior. Overlaps with social anxiety disorder but focuses on the impact on others rather than on oneself.'},
+
+  // CH 4 TERMS
+  {chapter:'ch4', term:'Mood Disorders', def:'A category of psychological disorders characterized by profound disturbances in emotional state. DSM-5-TR divides these into unipolar depressive disorders (e.g., MDD, PDD) and bipolar disorders (BD-I, BD-II, cyclothymia).'},
+  {chapter:'ch4', term:'Major Depressive Disorder (MDD)', def:'A DSM-5-TR diagnosis defined by ≥5 depressive symptoms (including sad mood or anhedonia) lasting ≥2 weeks and causing significant distress/impairment. MDD is episodic, with 40–50% experiencing another episode within 10 years.'},
+  {chapter:'ch4', term:'Anhedonia', def:'The inability to experience pleasure from activities that were previously enjoyable. Considered a cardinal symptom of depression and a focus of biological research, linked to diminished reward system (striatal) activity.'},
+  {chapter:'ch4', term:'Persistent Depressive Disorder', def:'A DSM-5-TR diagnosis characterized by chronically depressed mood plus ≥2 depressive symptoms for ≥2 years (≥1 year in children), with symptoms never clearing for >2 months. Despite fewer symptoms than MDD, outcomes are often more severe due to chronicity.'},
+  {chapter:'ch4', term:'Psychomotor Retardation', def:'A slowing of physical movements, speech, and thought processes in depression. May appear as slow, dragging movements, monotone speech, or delayed responses. One of the observable (not just self-reported) symptoms of depression.'},
+  {chapter:'ch4', term:'Psychomotor Agitation', def:'Excessive, purposeless motor activity in depression or mania — such as pacing, hand-wringing, and inability to sit still. Represents the opposite of psychomotor retardation and can occur in severe depressive episodes.'},
+  {chapter:'ch4', term:'Episodic Disorder', def:'A disorder characterized by periods of symptom presence followed by periods of remission. MDD and bipolar disorders are episodic; this contrasts with chronic conditions like PDD or cyclothymia, which persist continuously over years.'},
+  {chapter:'ch4', term:'Bipolar I Disorder', def:'A DSM-5-TR mood disorder defined by ≥1 lifetime manic episode. Manic episodes must last ≥1 week, cause marked impairment, require hospitalization, or involve psychosis. A depressive episode is not required for the diagnosis.'},
+  {chapter:'ch4', term:'Bipolar II Disorder', def:'A DSM-5-TR mood disorder defined by ≥1 hypomanic episode AND ≥1 major depressive episode, with NO lifetime manic episode. Hypomania is milder than mania and does not cause marked impairment.'},
+  {chapter:'ch4', term:'Mania', def:'A distinct period of abnormally elevated or irritable mood, increased energy, and ≥3 additional symptoms (e.g., decreased sleep need, grandiosity, pressured speech, flight of ideas, risky behavior) lasting ≥1 week, causing marked impairment.'},
+  {chapter:'ch4', term:'Hypomania', def:'A less severe form of mania (lasting ≥4 days) that involves observable changes in functioning but does NOT cause marked impairment and does NOT require hospitalization or include psychosis. Required for Bipolar II diagnosis.'},
+  {chapter:'ch4', term:'Cyclothymic Disorder', def:'A chronic DSM-5-TR mood disorder involving ≥2 years of frequent mood cycling between mild hypomanic symptoms and mild depressive symptoms that never meet full criteria for a hypomanic or major depressive episode.'},
+  {chapter:'ch4', term:'Flight of Ideas', def:'Rapid, loosely connected thoughts that jump between topics, characteristic of manic episodes. The person may speak very quickly and jump from one idea to another in ways that are hard for others to follow.'},
+  {chapter:'ch4', term:'Neuroticism', def:'A personality trait involving the tendency to experience frequent and intense negative affect (anxiety, sadness, irritability). A strong transdiagnostic risk factor for both mood disorders and anxiety disorders; predicts first onset of depression.'},
+  {chapter:'ch4', term:'Negative Triad', def:'Aaron Beck\'s cognitive model of depression, proposing that depressed individuals hold persistently negative views about (1) the self, (2) the world/ongoing experience, and (3) the future. These beliefs drive information-processing biases.'},
+  {chapter:'ch4', term:'Information-Processing Biases', def:'Tendencies to selectively encode, attend to, or remember information in systematic ways. In depression, biases favor negative information — people remember failures more than successes and attend more to negative feedback.'},
+  {chapter:'ch4', term:'Hopelessness Theory', def:'Abramson, Metalsky & Alloy\'s (1989) model proposing that stable + global attributions for negative events lead to hopelessness (belief that nothing will improve), which in turn causes depression. Prospective studies support this model.'},
+  {chapter:'ch4', term:'Attributional Style', def:'A person\'s habitual way of explaining why events (especially negative events) occur. Attributions vary on stable vs. unstable and global vs. specific dimensions. Stable, global attributions for negative events predict depression onset.'},
+  {chapter:'ch4', term:'Attributions', def:'Explanations a person generates for why an event occurred. In depression research, attributions for negative events are examined along dimensions of stability (permanent vs. temporary) and globality (affecting many areas vs. one area).'},
+  {chapter:'ch4', term:'Rumination', def:'A cognitive style involving repetitive, passive focus on one\'s negative emotions and their possible causes/consequences without taking action to improve. Associated with depression onset and maintenance; women ruminate more than men.'},
+  {chapter:'ch4', term:'Sickness Behavior', def:'A constellation of symptoms (reduced activity, social withdrawal, reduced appetite, sleep changes, low motivation) caused by pro-inflammatory cytokines fighting infection. These symptoms overlap substantially with MDD symptoms, suggesting cytokines may contribute to depression.'},
+  {chapter:'ch4', term:'Circadian Rhythms', def:'24-hour biological cycles that regulate sleep-wake patterns, body temperature, hormone release, and other physiological processes. Disruptions in circadian rhythms are a risk factor for and feature of both MDD and bipolar disorder.'},
+  {chapter:'ch4', term:'Striatum', def:'A subcortical brain region involved in reward processing and goal-directed behavior. In MDD, the striatum (especially nucleus accumbens) shows diminished activation to reward cues, potentially explaining anhedonia. In BD, striatal activity may be elevated during mania.'},
+  {chapter:'ch4', term:'Anterior Cingulate', def:'A brain region involved in emotional processing, cognitive control, and attention. Elevated activation of the anterior cingulate is observed in both MDD and bipolar disorder, particularly in response to emotional stimuli.'},
+  {chapter:'ch4', term:'Dorsolateral Prefrontal Cortex', def:'A region of the prefrontal cortex involved in working memory, cognitive control, and emotion regulation. Activity in this region is diminished in both MDD and bipolar disorder, contributing to impaired emotion regulation.'},
+  {chapter:'ch4', term:'Lithium', def:'A naturally occurring element used as a first-line mood stabilizer for Bipolar I disorder. Up to 80% experience at least mild benefit. Reduces relapse from ~60% (placebo) to ~40%. Requires regular blood monitoring due to toxicity risk at high levels.'},
+  {chapter:'ch4', term:'Selective Serotonin Reuptake Inhibitors (SSRIs)', def:'A class of antidepressants (e.g., fluoxetine/Prozac, sertraline/Zoloft) that block reuptake of serotonin, increasing synaptic availability. Currently most widely prescribed antidepressants due to fewer side effects than older classes. ~60% respond; 40–50% achieve full remission.'},
+  {chapter:'ch4', term:'Serotonin-Norepinephrine Reuptake Inhibitors (SNRIs)', def:'Antidepressants (e.g., venlafaxine/Effexor, duloxetine/Cymbalta) that block reuptake of both serotonin and norepinephrine. Similar efficacy to SSRIs; also first-line antidepressants with a broad range of approved uses.'},
+  {chapter:'ch4', term:'Monoamine Oxidase Inhibitors (MAOIs)', def:'An older class of antidepressants (e.g., tranylcypromine/Parnate) that inhibit the enzyme monoamine oxidase, which breaks down serotonin, norepinephrine, and dopamine. Effective but rarely used first-line due to dietary restrictions (tyramine) and side effects.'},
+  {chapter:'ch4', term:'Tricyclic Antidepressants', def:'An older class of antidepressants (e.g., imipramine/Tofranil, amitriptyline/Elavil) with efficacy comparable to SSRIs but with more side effects. Less commonly used since SSRIs became available. Still used in treatment-resistant cases.'},
+  {chapter:'ch4', term:'N-Methyl D-Aspartate (NMDA) Receptor Antagonist', def:'A newer class of antidepressant (e.g., dextromethorphan-bupropion/Auvelity; esketamine/Spravato) targeting glutamate NMDA receptors rather than serotonin. FDA-approved 2023; provides more rapid relief (within 1 week) than traditional antidepressants.'},
+  {chapter:'ch4', term:'Serotonin 1A Agonist', def:'A newer antidepressant class (e.g., gepirone/Exxua), FDA-approved 2023. Acts on serotonin 1A receptors and is expected to have fewer side effects than existing antidepressants (e.g., less sexual dysfunction than SSRIs).'},
+  {chapter:'ch4', term:'Mindfulness-Based Cognitive Therapy (MBCT)', def:'A treatment combining mindfulness meditation with cognitive therapy elements. Designed to prevent depressive relapse by teaching patients to recognize early warning signs of depression and to adopt a "decentered" perspective on negative thoughts (thoughts as mental events, not facts).'},
+  {chapter:'ch4', term:'Psychoeducation', def:'An intervention component that teaches patients (and often family members) about the nature, course, triggers, and treatment of their disorder. For bipolar disorder, psychoeducation has been shown to improve medication adherence and reduce relapse rates.'},
+  {chapter:'ch4', term:'Means Restriction', def:'A suicide prevention strategy that reduces access to highly lethal means of suicide (e.g., firearms, certain medications, bridge barriers). Effective because many suicidal urges are fleeting — barriers can prevent impulsive attempts. Examples: coal gas phase-out in Britain reduced UK suicide rate by one-third.'},
+  {chapter:'ch4', term:'Suicidal Ideation', def:'Thoughts or cognitions about ending one\'s own life. Ranges from passive ideation ("I wish I were dead") to active planning. Suicidal ideation is much more common than suicide attempts and is closely linked to hopelessness and perceived burdensomeness.'},
+  {chapter:'ch4', term:'Suicide Attempt', def:'A behavior undertaken with the intent to end one\'s life, though it does not result in death. Women make more suicide attempts than men; men complete suicide at higher rates, partly due to use of more lethal methods.'},
+  {chapter:'ch4', term:'Nonsuicidal Self-Injury (NSSI)', def:'Deliberate, direct injury to one\'s body (e.g., cutting, burning) without the intent to die. NSSI is distinguished from suicide attempts by the absence of lethal intent. Often functions as an emotion regulation strategy. Common in borderline personality disorder.'},
+  {chapter:'ch4', term:'Actigraphy', def:'A method of measuring physical movement (and estimating sleep) using a wrist-worn accelerometer. Used in circadian rhythm research to examine patterns of daytime vs. nighttime activity in mood disorders without requiring laboratory sleep studies.'},
+
+  // CH 5 TERMS
+  {chapter:'ch5', term:'Anxiety', def:'An emotional state of apprehension about an anticipated future threat, typically accompanied by physiological tension and moderate autonomic arousal. Adaptive in appropriate doses (improves performance), but excessive anxiety is the hallmark of anxiety disorders.'},
+  {chapter:'ch5', term:'Fear', def:'An immediate emotional and physiological response to a present, identifiable danger. Triggers the fight-or-flight response via sympathetic nervous system activation. In anxiety disorders, fear responses misfire — occurring without genuine danger.'},
+  {chapter:'ch5', term:'Anxiety Disorders', def:'A group of DSM-5-TR disorders characterized by excessive fear and anxiety, including specific phobia, social anxiety disorder, panic disorder, agoraphobia, and generalized anxiety disorder. Together the most prevalent class of psychological disorders (~28% lifetime).'},
+  {chapter:'ch5', term:'Specific Phobia', def:'A DSM-5-TR anxiety disorder defined by disproportionate, persistent fear of a specific object or situation (e.g., snakes, heights, blood), leading to avoidance or intense distress. Duration typically ≥6 months. Most common specific anxiety disorder (lifetime: ~13.8%).'},
+  {chapter:'ch5', term:'Social Anxiety Disorder', def:'A DSM-5-TR anxiety disorder defined by intense, disproportionate fear of social situations involving potential scrutiny. Core fear: embarrassment or negative evaluation by others. Leads to avoidance of social situations and significant impairment.'},
+  {chapter:'ch5', term:'Panic Disorder', def:'A DSM-5-TR anxiety disorder defined by recurrent unexpected panic attacks plus ≥1 month of worry about future attacks or significant behavioral change due to attacks. Distinct from a panic attack (single episode); the chronic pattern and anticipatory anxiety define the disorder.'},
+  {chapter:'ch5', term:'Panic Attack', def:'A sudden onset of intense fear or terror (peaking within 10 minutes) with ≥4 physical/cognitive symptoms (palpitations, shortness of breath, dizziness, derealization, fear of dying/losing control). Panic attacks can occur in many anxiety disorders, not just panic disorder.'},
+  {chapter:'ch5', term:'Agoraphobia', def:'A DSM-5-TR anxiety disorder defined by fear and avoidance of ≥2 situations where escaping or getting help would be difficult if anxiety symptoms occurred (e.g., crowds, public transportation, open/enclosed spaces, lines). Recognized as distinct from panic disorder in DSM-5.'},
+  {chapter:'ch5', term:'Generalized Anxiety Disorder (GAD)', def:'A DSM-5-TR anxiety disorder defined by excessive, uncontrollable worry about multiple topics for ≥6 months, with ≥3 associated symptoms (restlessness, fatigue, concentration difficulty, irritability, muscle tension, sleep disturbance). The core symptom is worry.'},
+  {chapter:'ch5', term:'Mowrer\'s Two-Factor Model', def:'A behavioral model (1947) proposing that anxiety disorders develop via (1) classical conditioning — a neutral stimulus is paired with a feared stimulus, acquiring fear — and (2) operant conditioning — avoidance reduces fear, reinforcing avoidance and preventing extinction.'},
+  {chapter:'ch5', term:'Prepared Learning', def:'The evolutionary hypothesis (Seligman, 1971) that humans are biologically predisposed to more readily learn fears of stimuli with evolutionary significance (snakes, heights, angry faces) than neutral stimuli. Explains why phobias cluster around a limited set of objects.'},
+  {chapter:'ch5', term:'Behavioral Inhibition', def:'A temperamental trait observable in infants as young as 4 months, characterized by fearfulness and withdrawal in response to novel stimuli, people, or situations. Strong predictor of later anxiety disorders, especially social anxiety disorder (3.79× increased risk by adolescence).'},
+  {chapter:'ch5', term:'Interoceptive Conditioning', def:'A form of classical conditioning in which panic attacks become conditioned responses to internal bodily sensations of arousal (e.g., rapid heartbeat, shortness of breath). These interoceptive conditioned responses are slower to extinguish than those to external stimuli.'},
+  {chapter:'ch5', term:'Locus Coeruleus', def:'A brain region in the brainstem that is the primary source of norepinephrine in the brain. Surges of norepinephrine from the locus coeruleus activate the sympathetic nervous system. Elevated norepinephrine activity is implicated in panic disorder.'},
+  {chapter:'ch5', term:'Medial Prefrontal Cortex', def:'A region of the prefrontal cortex involved in conscious processing and regulation of emotions, extinction of conditioned fear responses, and inhibition of amygdala activity. Diminished mPFC activity in anxiety disorders impairs fear regulation and extinction.'},
+  {chapter:'ch5', term:'Fear Circuit', def:'A set of brain structures involved in fear processing, including the amygdala, medial prefrontal cortex, hippocampus, locus coeruleus, and other regions. The term is somewhat controversial as these structures also process other salient stimuli and other emotional states.'},
+  {chapter:'ch5', term:'Safety Behaviors', def:'Actions taken to prevent feared consequences in anxiety-provoking situations (e.g., avoiding eye contact in social anxiety, checking pulse obsessively in panic disorder). Though temporarily reassuring, safety behaviors prevent disconfirmation of negative beliefs and maintain anxiety.'},
+  {chapter:'ch5', term:'Contrast Avoidance Model', def:'Newman & Llera\'s (2011) cognitive model of GAD, proposing that people with GAD find sudden shifts in negative emotion (emotional volatility) highly aversive, and maintain chronic worry as a way to avoid abrupt increases in distress when stressors occur.'},
+  {chapter:'ch5', term:'Neutral Predictable Unpredictable (NPU) Threat Task', def:'An experimental paradigm with three conditions: neutral (no threat), predictable threat (warning given before aversive stimulus), and unpredictable threat (no warning). Anxiety disorders are specifically related to heightened reactivity to the unpredictable condition.'},
+  {chapter:'ch5', term:'Anxiety Sensitivity Index', def:'A self-report measure assessing the degree to which people fear their own anxiety symptoms. The Bodily Concerns subscale measures fear of physical sensations of anxiety. High anxiety sensitivity prospectively predicts onset of panic attacks and anxiety disorders.'},
+  {chapter:'ch5', term:'Benzodiazepines', def:'A class of anxiolytic medications (e.g., Valium/diazepam, Xanax/alprazolam) that enhance GABA activity, reducing anxiety quickly. No longer recommended as first-line for anxiety disorders due to risks of dependence, withdrawal, cognitive side effects (memory lapses), and relapse on discontinuation.'},
+  {chapter:'ch5', term:'Anxiolytics', def:'Medications used to reduce anxiety symptoms. Includes SSRIs and SNRIs (current first-line), benzodiazepines (second-line due to dependence risk), and buspirone. SSRIs/SNRIs are preferred because they are non-addictive and treat comorbid depression.'},
+  {chapter:'ch5', term:'In Vivo (Real-Life) Exposure', def:'A form of exposure therapy in which the client directly confronts the feared stimulus or situation in real life, as opposed to imaginal exposure (visualizing) or virtual reality exposure. Considered the gold standard; virtual reality is equally effective for some phobias.'},
+  {chapter:'ch5', term:'Depersonalization', def:'A dissociative experience of feeling detached from one\'s mental processes or body — a sense of being an outside observer of one\'s own thoughts, feelings, or physical sensations. Can occur during panic attacks.'},
+  {chapter:'ch5', term:'Derealization', def:'A dissociative experience of the world feeling unreal, dreamlike, or detached. Objects may appear foggy, lifeless, or visually distorted. Can occur during panic attacks alongside depersonalization.'},
+];
+
+function buildFlashcards(filter='all') {
+  const grid = document.getElementById('fc-grid');
+  const stats = document.getElementById('fc-stats');
+  const filtered = filter === 'all' ? flashcards : flashcards.filter(f => f.chapter === filter);
+  stats.textContent = `Showing ${filtered.length} cards`;
+  grid.innerHTML = '';
+  filtered.forEach((card, i) => {
+    const chLabel = {ch3:'Chapter 3', ch4:'Chapter 4', ch5:'Chapter 5'}[card.chapter];
+    const el = document.createElement('div');
+    el.className = 'fc-card';
+    el.innerHTML = `
+      <div class="fc-inner">
+        <div class="fc-face fc-front">
+          <div class="fc-chapter-tag">${chLabel}</div>
+          <div class="fc-term">${card.term}</div>
+          <div class="fc-flip-hint">Click to flip ↻</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-chapter-tag">${chLabel}</div>
+          <div class="fc-def">${card.def}</div>
+        </div>
+      </div>
+    `;
+    el.addEventListener('click', () => el.classList.toggle('flipped'));
+    grid.appendChild(el);
+  });
+}
+
+function filterCards(filter, btn) {
+  document.querySelectorAll('.fc-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  buildFlashcards(filter);
+}
+
+// ============================
+// INIT
+// ============================
+buildQuiz();
+buildVignettes();
+buildFlashcards();
+</script>
+</body>
+</html>
